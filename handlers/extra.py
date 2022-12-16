@@ -1,8 +1,5 @@
 from aiogram import types, Dispatcher
-from config import bot, dp,DICES
-import random
-
-
+from config import bot, dp
 
 
 @dp.message_handler()
@@ -15,12 +12,6 @@ async def echo(message:types.Message):
             if i in message.text.lower().replace(' ',''):
                 await bot.delete_message(message.chat.id, message.message_id)
                 await message.answer(f'не матерись {username}, сам ты {i}!')
-    if message.text.startswith('.'):
-        await bot.pin_chat_message(message.chat.id, message.message_id)
-
-    if message.text == 'dice':
-        dice1 = await bot.send_dice(message.chat.id, emoji= random.choices(DICES))
-
 
 def register_handlers_extra(dp:Dispatcher):
     dp.register_message_handler(echo)
