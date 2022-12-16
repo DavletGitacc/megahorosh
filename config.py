@@ -1,6 +1,5 @@
 from aiogram import Bot, Dispatcher
 from decouple import config
-import random
 
 Token = config('Token')
 
