@@ -38,5 +38,5 @@ async def game(message: types.Message):
             await message.answer('пиши в группе')
 def register_handlers_admin(dp:Dispatcher):
     dp.register_message_handler(ban, commands=['ban'])
-    dp.register_message_handler(pin,text = '!pin')
+    dp.register_message_handler(pin,text = 'pin')
     dp.register_message_handler(game, text = 'game')
