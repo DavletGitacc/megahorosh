@@ -2,11 +2,11 @@ from aiogram import types,Dispatcher
 from aiogram.types import InlineKeyboardButton,InlineKeyboardMarkup
 from config import bot, dp
 from keyboard.client_kb import markup1
-
+from database import db_bot
 
 @dp.message_handler(commands = ['start'])
 async def comands(message:types.Message):
-    await bot.send_message(chat_id=message.from_user.id, text=f'type /quiz to start quiz'
+    await bot.send_message(chat_id=message.from_user.id, text=f'ssssss type /quiz to start quiz'
                                                               f' /meme to get photo'
                                                               f' /audio to get good song',
                            reply_markup=markup1)
@@ -45,8 +45,12 @@ async def Burger_King_audio1(message: types.Message):
     markup1.add(buttonaud)
     await bot.send_audio(message.from_user.id,audio = photo,reply_markup=markup1)
 
+async def get_random_user(message: types.Message):
+    await db_bot.sql_command_random(message)
+
 def register_handlers_client(dp:Dispatcher):
     dp.message_handler(comands,commands=['start'])
     dp.message_handler(quiz_1,commands=['quiz'])
     dp.message_handler(Burger_King,commands=['meme'])
     dp.message_handler(Burger_King_audio1,commands=['audio'])
+    dp.register_message_handler(get_random_user, commands=['get'])
