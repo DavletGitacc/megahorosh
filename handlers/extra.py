@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from config import bot, dp
 
-@dp.message_handler()
+# @dp.message_handler()
 async def echo(message:types.Message):
     if message.chat.type != 'private':
         bad_words = ['лох','темик','иди','пошел','че','кто','али','я','адис','нах','энен','ска','сук'

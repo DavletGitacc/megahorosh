@@ -5,10 +5,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from config import ADMIN
 from keyboard import client_kb
 import uuid
-from database.db_bot import sql_command_insert
+# from database.db_bot import sql_command_insert
 
-print(uuid.uuid1())
-gen_id=uuid.uuid1()
 class FSMadmin(StatesGroup):
     name = State()
     age = State()
@@ -23,8 +21,11 @@ async def fsm_start(message: types.Message):
         if message.from_user.id not in ADMIN:
             await message.answer('ты не достоин!')
         else:
+            global gen_id
+            gen_id = uuid.uuid1()
             await message.answer(f'твой id {gen_id}')
-            await message.answer('ты вообще кто такой')
+            await FSMadmin.name.set()
+            await message.answer('ты вообще кто такой',reply_markup=client_kb.cancle_markup)
     else:
         await message.answer('пиши в личке!!!')
 
@@ -73,18 +74,18 @@ async def new_photo(message: types.Message, state: FSMContext):
                                                           f"{data['name']}\n{data['age']}\n"
                                                           f"{data['naprovlenie']}\n{data['group']}\n"
                                    )
-    await FSMadmin.next()
-    await message.answer('Всё норм?', reply_markup=client_kb.submit_markup)
+        await FSMadmin.next()
+        await message.answer('Всё норм?', reply_markup=client_kb.submit_markup)
 
 
 async def submit(message: types.Message, state: FSMContext):
     if message.text.lower() == 'да':
-        await sql_command_insert(state)
+        # await sql_command_insert(state)
         await state.finish()
-        await message.answer('не темик')
+        await message.answer('не темик',reply_markup= client_kb.markup1)
     elif message.text.lower == 'нет':
         await state.finish()
-        await message.answer('темик')
+        await message.answer('темик',reply_markup= client_kb.markup1)
     else:
         await message.answer('не понятно')
 
@@ -93,7 +94,7 @@ async def cancle_fsm(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     if current_state is not None:
         await state.finish()
-        await message.answer('темик')
+        await message.answer('темик',reply_markup=client_kb.markup1)
 
 
 def register_handlers_fsm(dp: Dispatcher):
@@ -105,4 +106,5 @@ def register_handlers_fsm(dp: Dispatcher):
     dp.register_message_handler(new_age, state=FSMadmin.age)
     dp.register_message_handler(new_napr, state=FSMadmin.naprovlenie)
     dp.register_message_handler(new_group, state=FSMadmin.group)
+    dp.register_message_handler(new_photo, state=FSMadmin.photo,content_types=['photo'])
     dp.register_message_handler(submit, state=FSMadmin.submit)

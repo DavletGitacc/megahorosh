@@ -24,12 +24,12 @@ async def quiz_2(call: types.CallbackQuery):
         open_period=15,
         reply_markup=markup2,
     )
-@dp.callback_query_handler(text = 'buttonaud')
+# @dp.callback_query_handler(text = 'buttonaud')
 async def Burger_Kind_audio2(call: types.CallbackQuery):
     audio = open('media/ng brg.mp3', 'rb')
     await bot.send_audio(call.from_user.id, audio=audio)
 
-@dp.callback_query_handler(text = 'button2')
+# @dp.callback_query_handler(text = 'button2')
 async def quiz_3(call: types.CallbackQuery):
     question = 'Что такое Кинг?'
     answers = [
