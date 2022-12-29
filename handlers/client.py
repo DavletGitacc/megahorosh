@@ -1,5 +1,7 @@
 from aiogram import types,Dispatcher
 from aiogram.types import InlineKeyboardButton,InlineKeyboardMarkup
+from pip._internal import commands
+from parser.cinema import parse
 from config import bot, dp
 from keyboard.client_kb import markup1
 # from database import db_bot
@@ -46,6 +48,14 @@ async def Burger_King_audio1(message: types.Message):
     markup1.add(buttonaud)
     await bot.send_audio(message.from_user.id,audio = photo,reply_markup=markup1)
 
+async def get_movie(message: types.Message):
+    movies = parse()
+    for i in movies:
+        await message.answer(
+            f"{i['link']}\n"
+            f"{i['tite']}"
+        )
+
 # async def get_random_user(message: types.Message):
 #     await db_bot.sql_command_random(message)
 
@@ -54,4 +64,5 @@ def register_handlers_client(dp:Dispatcher):
     dp.message_handler(quiz_1,commands=['quiz'])
     dp.message_handler(Burger_King,commands=['meme'])
     dp.message_handler(Burger_King_audio1,commands=['audio'])
+    dp.message_handler(get_movie,commands=['film'])
     # dp.register_message_handler(get_random_user, commands=['get'])
