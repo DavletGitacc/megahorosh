@@ -4,7 +4,6 @@ from aiogram.utils import executor
 import logging
 from handlers import client,callback,extra,admin,fsm_admin,uvedomlenie
 from config import dp
-from parser import cinema
 # from database import db_bot
 
 client.register_handlers_client(dp)

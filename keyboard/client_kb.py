@@ -33,3 +33,5 @@ submit_markup = ReplyKeyboardMarkup(
 cancle_markup = ReplyKeyboardMarkup(resize_keyboard=True,
                                     one_time_keyboard=True
                                     ).add(KeyboardButton('/cancle'))
+film_mark_up = ReplyKeyboardMarkup(resize_keyboard=True,
+                                   one_time_keyboard=True).add(KeyboardButton('/film'))
