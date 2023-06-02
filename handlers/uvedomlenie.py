@@ -7,15 +7,15 @@ import asyncio
 async def get_chat_id(message: types.Message):
     global chat_id
     chat_id = message.from_user.id
-    await message.answer("Сам не можешь вспомнить???!!!")
+    await message.answer("Хорощо наопмню")
 
 
 async def homework():
     await bot.send_message(chat_id=chat_id, text="Надо начать делать ДЗ!")
 
 async def scheduler():
-    aioschedule.every().tuesday.at("17:50").do(homework)
-    aioschedule.every().friday.at("17:50").do(homework)
+    aioschedule.every().monday.at("18:00").do(homework)
+    aioschedule.every().thursday.at("18:00").do(homework)
 
     while True:
         await aioschedule.run_pending()
